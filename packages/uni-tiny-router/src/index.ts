@@ -125,6 +125,7 @@ export const createRouter = (options: CreateOptions) => {
 	 * @returns Route | null
 	 */
 	const matchRoute = (route: Route): Route | null => {
+		// eslint-disable-next-line prefer-const
 		let { path, name, query } = route
 		const _route: Route = { query: {} }
 
@@ -143,7 +144,7 @@ export const createRouter = (options: CreateOptions) => {
 		}
 
 		// 查找匹配的路由
-		let targetRoute = routes.find((r: Route) => {
+		const targetRoute = routes.find((r: Route) => {
 			// 首页匹配
 			if (path === HOME_PATH || path === EMPTY_PATH) {
 				return true
@@ -193,8 +194,8 @@ export const createRouter = (options: CreateOptions) => {
 	 * @returns void
 	 */
 	const matchToRoute = (route: Route): void => {
+		// eslint-disable-next-line prefer-const
 		let { path, name, query, type } = route
-
 		if (type && !routeMethods.includes(type)) {
 			throw new Error(`type必须是以下的值: ${routeMethods.join(', ')}`)
 		}
@@ -311,6 +312,7 @@ export const createRouter = (options: CreateOptions) => {
 
 				// 执行路由拦截器
 				next()
+					// eslint-disable-next-line @typescript-eslint/no-unused-vars
 					.then((nextRes: Route[]) => {
 						routeTo(processedRoute)
 							.then(() => {
