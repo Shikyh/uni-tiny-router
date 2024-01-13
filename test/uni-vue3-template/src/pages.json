@@ -11,6 +11,13 @@
 			"style": {
 				"navigationBarTitleText": "test"
 			}
+		},
+		{
+			"path": "pages/notfound/index",
+			"name": "notfound",
+			"style": {
+				"navigationBarTitleText": "404"
+			}
 		}
 	],
 	"globalStyle": {

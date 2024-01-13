@@ -6,6 +6,7 @@ import { parseQuery, stringifyQuery } from './qs'
 const DEFAULT_ROUTE_METHODS = ['navigateTo', 'switchTab', 'reLaunch', 'redirectTo', 'navigateBack']
 const HOME_PATH = '/'
 const EMPTY_PATH = ''
+const NOT_FOUND_ROUTE_NAME = 'notfound'
 
 // 路由跳转方法映射
 const ROUTE_METHOD_MAP = {
@@ -144,7 +145,7 @@ export const createRouter = (options: CreateOptions) => {
 		}
 
 		// 查找匹配的路由
-		const targetRoute = routes.find((r: Route) => {
+		let targetRoute = routes.find((r: Route) => {
 			// 首页匹配
 			if (path === HOME_PATH || path === EMPTY_PATH) {
 				return true
@@ -157,6 +158,13 @@ export const createRouter = (options: CreateOptions) => {
 			return r.path === path?.replace(/^\//, '')
 		})
 
+		if (targetRoute) {
+			const clonedRoute = deepClone(targetRoute)
+			return clonedRoute ? { ...clonedRoute, ..._route } : null
+		}
+		// 尝试匹配404页面
+		targetRoute = routes.find((r: Route) => r.name?.toLowerCase() === NOT_FOUND_ROUTE_NAME)
+		console.log(targetRoute)
 		if (targetRoute) {
 			const clonedRoute = deepClone(targetRoute)
 			return clonedRoute ? { ...clonedRoute, ..._route } : null

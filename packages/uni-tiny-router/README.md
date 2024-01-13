@@ -1,6 +1,6 @@
 # uni-tiny-router
 
-[![](https://img.shields.io/badge/npm-v1.0.0-blue)](https://www.npmjs.com/package/uni-tiny-router)
+[![](https://img.shields.io/badge/npm-v1.0.2-blue)](https://www.npmjs.com/package/uni-tiny-router)
 
 >一个基于uni-app的原生钩子实现和方法，使用typescript+uniapp构建更贴合uniapp的router插件，适配vue3
 

@@ -1,6 +1,6 @@
 {
 	"name": "uni-tiny-router",
-	"version": "1.0.0",
+	"version": "1.0.2",
 	"description": "一个基于uni-app的原生钩子，使用typescript+uniapp构建更贴合uniapp的router插件，适配vue3",
 	"main": "./dist/index.js",
 	"module": "./dist/index.esm.js",
