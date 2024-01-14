@@ -1,6 +1,6 @@
 # uni-tiny-router
 
-[![](https://img.shields.io/badge/npm-v1.0.2-blue)](https://www.npmjs.com/package/uni-tiny-router)
+[![](https://img.shields.io/badge/npm-v1.0.6-blue)](https://www.npmjs.com/package/uni-tiny-router)
 
 >一个基于uni-app的原生钩子实现和方法，使用typescript+uniapp构建更贴合uniapp的router插件，适配vue3
 
@@ -113,3 +113,16 @@ export const createApp = () => {
 | --------------------------- | ------------------------------------------------------------------------------------------------- |
 | beforeEach                      | 前置守卫的next用法跟vue-router有所不同，调用next代表不拦截，beforeEach接受的函数参数是个async函数，需要使用await来获取异步的结果，如果需要使用异步操作则需包装成promise形式，不能直接使用setTimeout等具有回调性质的异步操作，完成操作必须要调用`next`方法执行放行
 | afterEach                       |
+
+### 404路由页面配置
+>当路由配置表(pages.json)中没有与跳转路径对应的路由时，会出现报错，此时可以配置一个404页面(如有需要)。404路由name为notfound,不区分英文大小写
+
+```json
+{
+  "path": "你的路径",
+  "name": "notfound",
+  "style": {
+    "navigationBarTitleText": "404"
+  }
+}
+```
