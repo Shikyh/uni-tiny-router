@@ -3,6 +3,7 @@
 		<image class="logo" src="/static/logo.png" />
 		<view @click="handleNavigate" class="btn">跳转</view>
 		<view @click="handleNavNotExit" class="btn">404导航跳转</view>
+		<!-- <view @click="handleGuard" class="btn">路由守卫测试跳转</view> -->
 	</view>
 </template>
 
@@ -18,6 +19,10 @@ const handleNavigate = () => {
 // 测试跳转不存在的路由配置
 const handleNavNotExit = () => {
 	router.navigateTo({ url: 'pages/home/index' })
+}
+// 全局路由守卫
+const handleGuard = () => {
+	router.navigateTo({ url: 'pages/guard/index' })
 }
 </script>
 

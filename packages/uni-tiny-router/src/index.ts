@@ -73,16 +73,17 @@ export const createRouter = (options: CreateOptions) => {
 	 * @param from 来源路由
 	 * @returns Promise<Route[]>
 	 */
-	const callWithNext = (fnList: BeforeEach[], to: Route, from: Route): Promise<Route[]> => {
+	const callWithNext = (fnList: BeforeEach[], to: Route, from: Route): Promise<(Route | boolean)[]> => {
 		const allWithNext = fnList.map((fn: BeforeEach) => {
-			return new Promise<Route>((resolve, reject) => {
+			return new Promise<Route | boolean>((resolve, reject) => {
 				try {
 					fn(to, from, (value?: Route | boolean | string) => {
+						console.log(value)
 						if (typeof value === 'undefined') {
-							return resolve({ type: 'navigateTo' } as Route)
+							return resolve(true)
 						}
 						if (typeof value === 'boolean') {
-							if (value) return resolve({ type: 'navigateTo' } as Route)
+							if (value) return resolve(true)
 							return reject(new Error('路由跳转失败'))
 						}
 						if (isObject(value)) {
@@ -261,7 +262,7 @@ export const createRouter = (options: CreateOptions) => {
 	 * 调用下一步
 	 * @returns Promise<Route[]>
 	 */
-	const next = (): Promise<Route[]> => {
+	const next = (): Promise<(Route | boolean)[]> => {
 		matchFromRoute()
 
 		if (beforeEach.length > 0 && routeMeta.to && routeMeta.from) {
@@ -321,7 +322,8 @@ export const createRouter = (options: CreateOptions) => {
 				// 执行路由拦截器
 				next()
 					// eslint-disable-next-line @typescript-eslint/no-unused-vars
-					.then((nextRes: Route[]) => {
+					.then((nextRes: Route | boolean[]) => {
+						console.log('next--->', nextRes)
 						routeTo(processedRoute)
 							.then(() => {
 								resolve()
@@ -329,6 +331,19 @@ export const createRouter = (options: CreateOptions) => {
 								if (routeMeta.to && routeMeta.from) {
 									callWithoutNext(afterEach, routeMeta.to, routeMeta.from)
 								}
+								// 处理路由重定向拦截
+								nextRes.forEach((redirectRoute: Route) => {
+									if (isObject(redirectRoute)) {
+										const route = handleRoute({ type: 'navigateTo', ...redirectRoute })
+										console.log(route)
+										// 更新to路由信息
+										matchToRoute(route)
+										isOperateAPI = true
+										push(route).catch((error) => {
+											console.warn('重定向路由跳转失败:', error)
+										})
+									}
+								})
 							})
 							.catch(reject)
 					})

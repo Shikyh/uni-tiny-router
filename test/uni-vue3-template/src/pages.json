@@ -18,6 +18,12 @@
 			"style": {
 				"navigationBarTitleText": "404"
 			}
+		},
+		{
+			"path": "pages/guard/index",
+			"style": {
+				"navigationBarTitleText": "路由守卫测试"
+			}
 		}
 	],
 	"globalStyle": {
