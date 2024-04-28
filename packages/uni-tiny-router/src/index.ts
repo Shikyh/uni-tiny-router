@@ -41,7 +41,7 @@ export const createRouter = (options: CreateOptions) => {
 
 	const routes = [...pagesRoutes, ...subPackagesRoutes]
 	const routeMethods = options.routeMethods || DEFAULT_ROUTE_METHODS
-	const routeMeta: RouteMeta = { to: null, from: null }
+	const routeMeta: RouteMeta = { to: {}, from: {} }
 	const beforeEach: BeforeEach[] = []
 	const afterEach: AfterEach[] = []
 	let isLaunch = false
@@ -385,22 +385,16 @@ export const createRouter = (options: CreateOptions) => {
 		install(app: any): void {
 			app.mixin({
 				onLaunch(options: any) {
-					if (router.routeMeta.to?.query && options?.query) {
-						router.routeMeta.to.query = {
-							...options.query,
-							...router.routeMeta.to.query
-						}
-					}
+					console.log('onLaunch', options)
+					router.routeMeta.to!.query = { ...options.query, ...router.routeMeta.to!.query }
 				},
 				onLoad(options: any) {
-					if (router.routeMeta.to?.query && options) {
-						router.routeMeta.to.query = {
-							...options,
-							...router.routeMeta.to.query
-						}
-					}
+					console.log('onLoad', options)
+					router.routeMeta.to!.query = { ...options, ...router.routeMeta.to!.query }
 				},
 				onShow(options: any) {
+					console.log('onShow', options)
+					// app环境
 					if (this.$mpType === 'app') {
 						if (options?.query && router.routeMeta.to?.query) {
 							router.routeMeta.to.query = {
