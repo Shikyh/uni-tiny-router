@@ -1,6 +1,6 @@
 import pages from '@/pages.json'
-import { createRouter } from '../../../../packages/uni-tiny-router/src/index'
-// import { createRouter } from 'uni-tiny-router'
+// import { createRouter } from '../../../../packages/uni-tiny-router/src/index'
+import { createRouter } from 'uni-tiny-router'
 export const router = createRouter({ routes: pages.pages })
 
 // 需要拦截路由
